@@ -25,12 +25,17 @@ public class TestRestController {
 	}
 
 	@GetMapping("/employees")
-	public List<Employee> employees() {
+	public String employees() {
 		
-		List<Employee> employees = this.employeeDao.getEmployees();
-		
-		return employees;
+		return "Employees";
 	}
+//	@GetMapping("/employees")
+//	public List<Employee> employees() {
+//		
+//		List<Employee> employees = this.employeeDao.getEmployees();
+//		
+//		return employees;
+//	}
 	
 	@GetMapping("/mysql")
 	public String mysql() throws URISyntaxException {
