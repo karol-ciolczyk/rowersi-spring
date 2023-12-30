@@ -20,7 +20,7 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 	
 	public List<Employee> getEmployees(){
 		
-		TypedQuery<Employee> query = entityManager.createQuery("FROM employee", Employee.class);
+		TypedQuery<Employee> query = entityManager.createQuery("FROM Employee", Employee.class);
 		
 		return query.getResultList();
 	};
