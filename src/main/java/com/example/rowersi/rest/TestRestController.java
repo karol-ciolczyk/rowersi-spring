@@ -5,12 +5,14 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rowersi.dao.EmployeeDao;
 import com.example.rowersi.entity.Employee;
 
 @RestController
+@RequestMapping("api/v1")
 public class TestRestController {
 	
 	private EmployeeDao employeeDao;
