@@ -1,4 +1,4 @@
-package com.example.rowersi.security;
+package com.example.rowersi.rest;
 
 import javax.naming.AuthenticationException;
 
@@ -37,18 +37,6 @@ public class LoginController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/test")
-	public String testMethod() {
-		UserDetails user = User.builder()
-				.username("karcio90")
-    			.password("{bcrypt}$2a$12$1YsTYhzR85m2o71nknA81eVc6nGM34.Fdwn0YlZE4GMOvIMKupirO")
-    			.roles("USER", "ADMIN")
-    			.build();
-		userDetailsManager.createUser(user);
-		
-		return "test mapping";
-	}
-
 	public record LoginRequest(String username, String password) {
 	}
 
