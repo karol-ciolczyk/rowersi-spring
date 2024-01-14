@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -43,6 +44,7 @@ public class SecurityConfig {
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.authorizeHttpRequests((authorize) -> authorize
 //				.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+				.requestMatchers(HttpMethod.POST ,"/api/v1/signup").permitAll() 
 				.requestMatchers("/api/v1/admin/**").access(new WebExpressionAuthorizationManager("hasRole('ADMIN') && hasRole('USER')"))
 				.requestMatchers("/test").permitAll()
 				.anyRequest().authenticated()
