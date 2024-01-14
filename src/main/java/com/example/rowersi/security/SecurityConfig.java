@@ -24,6 +24,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -39,7 +40,8 @@ public class SecurityConfig {
 		http
 			.csrf((csrf) -> csrf
 					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-					.csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())       
+					.csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+					.ignoringRequestMatchers( new AntPathRequestMatcher(HttpMethod.POST.name(), "/api/v1/users")) 
 			)
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.authorizeHttpRequests((authorize) -> authorize
