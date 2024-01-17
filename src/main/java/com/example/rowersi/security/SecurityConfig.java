@@ -54,7 +54,9 @@ public class SecurityConfig {
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
-			.formLogin(Customizer.withDefaults());
+			.formLogin(login -> 
+				login.defaultSuccessUrl("/")
+			);
 
 		return http.build();
 	}
