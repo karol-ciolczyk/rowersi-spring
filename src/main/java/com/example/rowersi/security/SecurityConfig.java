@@ -11,7 +11,9 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,44 +33,31 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 	
     @Bean
-  public UserDetailsManager userDetailsManager(DataSource dataSource) {
-  	return new JdbcUserDetailsManager(dataSource);
-  }
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+    	return new JdbcUserDetailsManager(dataSource);
+    }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf((csrf) -> csrf
+					.ignoringRequestMatchers(HttpMethod.POST.name(),"/api/v1/users")
 					.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 					.csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
-					.ignoringRequestMatchers( new AntPathRequestMatcher(HttpMethod.POST.name(), "/api/v1/users")) 
 			)
 			.addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
 			.authorizeHttpRequests((authorize) -> authorize
-//				.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
-				.requestMatchers(HttpMethod.POST ,"/api/v1/signup").permitAll() 
-				.requestMatchers("/api/v1/admin/**").access(new WebExpressionAuthorizationManager("hasRole('ADMIN') && hasRole('USER')"))
-				.requestMatchers("/test").permitAll()
-				.anyRequest().authenticated()
+					.requestMatchers(HttpMethod.POST ,"/api/v1/users").permitAll()
+//					.requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
+					.requestMatchers("/api/v1/admin/**").access(new WebExpressionAuthorizationManager("hasRole('ADMIN') && hasRole('USER')"))
+					.requestMatchers("/test").permitAll()
+					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(Customizer.withDefaults());
 
 		return http.build();
 	}
-	
-//	@Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http
-//			.authorizeHttpRequests((authorize) -> authorize
-//				.requestMatchers("/test").permitAll()
-//				.requestMatchers("/login").permitAll()
-//				.anyRequest().authenticated()
-//			)
-//			.csrf().disable();
-//
-//		return http.build();
-//	}
 
 	@Bean
 	public AuthenticationManager authenticationManager(

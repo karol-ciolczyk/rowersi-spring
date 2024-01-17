@@ -32,9 +32,13 @@ public class UsersController {
 		return userDao.getUsers();
 	};
 	
+	@GetMapping("/users")
+	public String getTestUsers() {
+		return "get TEST users";
+	}
+	
 	@PostMapping("/users")
 	public void testMethod(@RequestBody UserCredentials userCredentials) {
-//		this.userDetailsManagerImplementation.addUser(userCredentials.username, userCredentials.password);
 		String username = userCredentials.username();
 		this.userDetailsManagerImplementation.createUser(userCredentials.username, userCredentials.password);
 	}
