@@ -55,7 +55,7 @@ public class SecurityConfig {
 			)
 			.httpBasic(Customizer.withDefaults())
 			.formLogin(login -> 
-				login.defaultSuccessUrl("/")
+				login.defaultSuccessUrl("https://rowersi.vercel.app/", true)
 			);
 
 		return http.build();
