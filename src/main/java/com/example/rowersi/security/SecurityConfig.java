@@ -54,10 +54,10 @@ public class SecurityConfig {
 					.anyRequest().authenticated()
 			)
 			.httpBasic(Customizer.withDefaults())
-			.formLogin(Customizer.withDefaults());
-//		.formLogin(login -> 
-//		login.defaultSuccessUrl("https://rowersi.vercel.app/", true)
-//	);
+//			.formLogin(Customizer.withDefaults());
+			.formLogin(login -> 
+					login.defaultSuccessUrl("https://rowersi.vercel.app/", true)
+			);
 
 		return http.build();
 	}
