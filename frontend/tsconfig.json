@@ -1,0 +1,13 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./tsconfig-helpers", "./constants"],
+    "types": [
+      "@types/mapbox__mapbox-sdk",
+      "@types/mapbox_polyline",
+      "@type/lodash.debounce",
+      "@type/lodash"
+    ]
+  }
+}
