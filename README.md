@@ -1,1 +1,1 @@
-# rowersi-spring app -
+# rowersi-spring app
