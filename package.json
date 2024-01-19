@@ -9,7 +9,7 @@
     "dev": "cd frontend && npm run dev",
     "generate": "cd frontend && npm run generate",
     "preview": "cd frontend && npm run preview",
-    "postinstall": "cd frontend && npm run postinstall",
+    "postinstall": "cd frontend && npm run postinstall"
   },
   "dependencies": {},
   "devDependencies": {}
