@@ -1,40 +1,12 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
+  "name": "rowersi-fullstack",
+  "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "start": "node .output/server/index.mjs",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
+    "install": "cd frontend && npm install",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start"
   },
-  "devDependencies": {
-    "@pinia/nuxt": "^0.5.1",
-    "@types/lodash.debounce": "^4.0.9",
-    "@types/mapbox-gl": "^2.7.19",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-vue": "^9.19.2",
-    "nuxt": "^3.9.0",
-    "prettier": "3.1.1",
-    "vite-plugin-vuetify": "^2.0.1",
-    "vue": "^3.4.3",
-    "vue-router": "^4.2.5",
-    "vuetify": "^3.4.9"
-  },
-  "dependencies": {
-    "@mapbox/mapbox-gl-directions": "^4.1.2",
-    "@mdi/font": "^7.4.47",
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/vuetify": "^1.12.3",
-    "@types/mapbox__mapbox-gl-geocoder": "^4.7.7",
-    "@types/mapbox__mapbox-sdk": "^0.14.0",
-    "@types/mapbox__polyline": "^1.0.5",
-    "mapbox-gl": "^3.0.1",
-    "pinia": "^2.1.7"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
