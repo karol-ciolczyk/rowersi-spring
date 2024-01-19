@@ -11,6 +11,10 @@
     "preview": "cd frontend && npm run preview",
     "postinstall": "cd frontend && npm run postinstall"
   },
+  "engines": {
+  "node": "20.10.0",
+  "npm": "10.2.3"
+  },
   "dependencies": {},
   "devDependencies": {}
 }
