@@ -16,15 +16,5 @@
   "npm": "10.2.3"
   },
   "dependencies": {},
-  "dependencies": {
-    "@mapbox/mapbox-gl-directions": "^4.1.2",
-    "@mdi/font": "^7.4.47",
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/vuetify": "^1.12.3",
-    "@types/mapbox__mapbox-gl-geocoder": "^4.7.7",
-    "@types/mapbox__mapbox-sdk": "^0.14.0",
-    "@types/mapbox__polyline": "^1.0.5",
-    "mapbox-gl": "^3.0.1",
-    "pinia": "^2.1.7"
-  }
+  "devDependencies": {}
 }
