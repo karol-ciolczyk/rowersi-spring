@@ -8,25 +8,30 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDetailsManagerImplementation {
-	
-	private UserDetailsManager userDetailsManager;
-	
-	public UserDetailsManagerImplementation(UserDetailsManager userDetailsManager) {
-		this.userDetailsManager = userDetailsManager;
-	}
-	
-	public void createUser(String username, String password) {
-		UserDetails user = User.builder()
-				.username(username)
-				.password("{bcrypt}"+encodePassword(password))
-				.roles("USER")
-				.build();
-		
-		userDetailsManager.createUser(user);
-	}
-	
-	private String encodePassword(String password) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
-		return encoder.encode(password);
-	}
+
+  private UserDetailsManager userDetailsManager;
+
+  public UserDetailsManagerImplementation(UserDetailsManager userDetailsManager) {
+    this.userDetailsManager = userDetailsManager;
+  }
+
+  public void createUser(String username, String password) {
+    UserDetails user = User
+        .builder()
+        .username(username)
+        .password("{bcrypt}" + encodePassword(password))
+        .roles("USER")
+        .build();
+
+    userDetailsManager.createUser(user);
+  }
+
+  public UserDetails getUser(String username) {
+    return this.userDetailsManager.loadUserByUsername(username);
+  }
+
+  private String encodePassword(String password) {
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(16);
+    return encoder.encode(password);
+  }
 }
