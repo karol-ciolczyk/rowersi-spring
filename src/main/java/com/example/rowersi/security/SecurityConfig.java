@@ -13,22 +13,35 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import com.example.rowersi.security.filter.JwtTokenFilter;
+import com.example.rowersi.util.jwt.JwtTokenUtil;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
   private UserDetailsManager userDetailsManager;
+  private JwtTokenUtil jwtTokenUtil;
 
   @Autowired
-  public void setUserDetailsManager(UserDetailsManager userDetailsManager) {
+  public void setUserDetailsManager(UserDetailsManager userDetailsManager,
+      JwtTokenUtil jwtTokenUtil) {
     this.userDetailsManager = userDetailsManager;
+    this.jwtTokenUtil = jwtTokenUtil;
   }
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager auth)
       throws Exception {
     http
+        .exceptionHandling(exceptionHandling -> exceptionHandling
+            .authenticationEntryPoint((request, response, authException) -> {
+              System.out
+                  .println("MY EXCEPTION HANDLER !!!!!!!!!!!!!!!!!!!" + authException.getMessage());
+              response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+            }))
         .csrf(csrf -> csrf.disable())
         .cors(cors -> cors.disable())
         .sessionManagement(
@@ -36,10 +49,12 @@ public class SecurityConfig {
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/api/v1/login")
             .permitAll()
-            .requestMatchers("/api/v1/users")
-            .permitAll()
+            // .requestMatchers("/api/v1/users")
+            // .permitAll()
             .anyRequest()
-            .authenticated());
+            .authenticated())
+        .addFilterBefore(new JwtTokenFilter(jwtTokenUtil, userDetailsManager),
+            AuthorizationFilter.class);
 
     return http.build();
   }
