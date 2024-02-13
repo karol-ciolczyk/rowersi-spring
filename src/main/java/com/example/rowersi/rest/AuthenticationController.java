@@ -78,7 +78,7 @@ public class AuthenticationController {
           .sameSite("None")
           // .path("/")
           .maxAge(60)
-          .domain("localhost:8080")
+          .domain("https://rowersi-2474fa2672fd.herokuapp.com")
           .build();
 
       HttpHeaders headers = new HttpHeaders();
