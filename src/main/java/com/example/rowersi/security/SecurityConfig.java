@@ -14,6 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import com.example.rowersi.security.filter.JwtTokenFilter;
 import com.example.rowersi.util.jwt.JwtTokenUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -43,7 +46,7 @@ public class SecurityConfig {
               response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
             }))
         .csrf(csrf -> csrf.disable())
-        .cors(cors -> cors.disable())
+        // .cors(cors -> cors.disable())
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize -> authorize
@@ -57,6 +60,19 @@ public class SecurityConfig {
             AuthorizationFilter.class);
 
     return http.build();
+  }
+
+  // CORS configuration
+  @Bean
+  public CorsFilter corsFilter() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowCredentials(true);
+    config.addAllowedOrigin("https://rowersi-2474fa2672fd.herokuapp.com/");
+    config.addAllowedHeader("*");
+    config.addAllowedMethod("*");
+    source.registerCorsConfiguration("/**", config);
+    return new CorsFilter(source);
   }
 
   @Bean
