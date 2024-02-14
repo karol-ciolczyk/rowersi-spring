@@ -69,6 +69,7 @@ public class SecurityConfig {
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.addAllowedOrigin("https://rowersi-2474fa2672fd.herokuapp.com/");
+    config.addAllowedOrigin("http://localhost:3000");
     config.addAllowedHeader("*");
     config.addAllowedMethod("*");
     source.registerCorsConfiguration("/**", config);
