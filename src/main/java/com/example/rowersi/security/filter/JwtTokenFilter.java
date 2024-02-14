@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.WebUtils;
 import com.example.rowersi.util.jwt.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,6 +36,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     // System.out.println("localAddr" + request.getLocalAddr());
     // System.out.println("LocalPort" + request.getLocalPort());
     System.out.println(request.getHeader("Authorization"));
+    System.out.println(WebUtils.getCookie(request, "Bearer"));
 
     String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
     // System.out.println(bearer.isEmpty());
