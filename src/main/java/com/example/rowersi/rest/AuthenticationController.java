@@ -64,21 +64,12 @@ public class AuthenticationController {
 
       TokenCO tokennnn = jwtTokenUtil.generateTokens(user, role.getAuthority());
 
-      // Cookie cookie = new Cookie("Access_token", tokennnn.getAccess_token());
-      // cookie.setHttpOnly(true);
-      // cookie.setValue("sdfsdfdsf");
-      // cookie.setSecure(true);
-      // cookie.setAttribute("token", "tokenAAAAAA");
-      // response.addCookie(cookie);
-
       ResponseCookie springCookie = ResponseCookie
-          .from("token", "token_value_sdfdsfhhh")
+          .from("Bearer", tokennnn.getAccess_token())
           .httpOnly(true)
           .secure(true)
           .sameSite("None")
-          // .path("/")
           .maxAge(60)
-          // .domain("https://rowersi-2474fa2672fd.herokuapp.com")
           .build();
 
       HttpHeaders headers = new HttpHeaders();
