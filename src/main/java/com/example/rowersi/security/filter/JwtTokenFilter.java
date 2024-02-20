@@ -16,6 +16,7 @@ import org.springframework.web.util.WebUtils;
 import com.example.rowersi.util.jwt.JwtTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -32,11 +33,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
+    Cookie cookie = WebUtils.getCookie(request, "Bearer");
+    if (cookie != null) {
+      System.out.println("cookie value ====================" + cookie.getValue());
+      System.out.println("cookie value ====================" + cookie.getSecure());
+      response.addCookie(cookie);
+    }
     // TODO Auto-generated method stub
     // System.out.println("localAddr" + request.getLocalAddr());
     // System.out.println("LocalPort" + request.getLocalPort());
     System.out.println(request.getHeader("Authorization"));
-    System.out.println(WebUtils.getCookie(request, "Bearer"));
 
     String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
     // System.out.println(bearer.isEmpty());

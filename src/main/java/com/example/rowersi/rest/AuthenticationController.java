@@ -3,7 +3,6 @@ package com.example.rowersi.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.rowersi.util.jwt.JwtTokenUtil;
 import com.example.rowersi.util.jwt.TokenCO;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController()
@@ -64,17 +64,23 @@ public class AuthenticationController {
 
       TokenCO tokennnn = jwtTokenUtil.generateTokens(user, role.getAuthority());
 
-      ResponseCookie springCookie = ResponseCookie
-          .from("Bearer", tokennnn.getAccess_token())
-          .httpOnly(true)
-          .secure(true)
-          .sameSite("None")
-          .maxAge(60)
-          .build();
+      // ResponseCookie springCookie = ResponseCookie
+      // .from("Bearer", tokennnn.getAccess_token())
+      // .httpOnly(true)
+      // .secure(true)
+      // .sameSite("None")
+      // .maxAge(60)
+      // .build();
+      Cookie cookieeeee = new Cookie("Bearer", tokennnn.getAccess_token());
+      cookieeeee.setHttpOnly(true);
+      cookieeeee.setSecure(true);
+      cookieeeee.setMaxAge(60);
+      cookieeeee.setAttribute("SameSite", "None");
 
       HttpHeaders headers = new HttpHeaders();
       headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + tokennnn.getAccess_token());
-      headers.add(HttpHeaders.SET_COOKIE, springCookie.toString());
+      // headers.add(HttpHeaders.SET_COOKIE, springCookie.toString());
+      response.addCookie(cookieeeee);
 
 
       return new ResponseEntity<>(headers, HttpStatus.OK);
